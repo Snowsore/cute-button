@@ -1,6 +1,8 @@
 # cute-button
 
-![Screenshot](docs/images/cutey.png?style=centerme))
+<p align='center'>
+  <img src='docs/images/cutey.png'/>
+</p>
 
 ## A Cute button
 https://cutey.snowsore.com/
