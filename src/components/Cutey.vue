@@ -1,11 +1,15 @@
 <template>
-  <div ref='box'
-    @mouseover='mouseover'
-    @mouseleave='mouseleave'
-    @click='click'
-    class='body hidden'
-  >
-    {{ kaomoji }}
+  <div :class='{wavey: anime.wavey}'>
+    <div :class='{spining: anime.spining}'>
+      <div ref='box'
+        @mouseover='mouseover'
+        @mouseleave='mouseleave'
+        @click='click'
+        class='body'
+      >
+        {{ kaomoji }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -16,10 +20,15 @@ export default {
       state: '',
       action: '',
       kaomoji: '',
+      anime: {
+        hidden: true,
+        spining: false,
+        wavey: true,
+      }
     }
   },
   mounted() {
-    setInterval(() => {
+    setTimeout(() => {
       this.$refs.box.classList.remove('hidden')
       this.step()
     }, 0)
@@ -75,6 +84,11 @@ export default {
           this.kaomoji = '(ﾟωﾟ；)'
           break
         case 'shy':
+          this.anime.spining = true
+          setTimeout(() => {
+            this.anime.spining = false
+            this.kaomoji = '(´｡• ω •｡`)'
+          }, 1000)
           this.kaomoji = '(*ﾟдﾟ*)'
           break
         default:
@@ -87,15 +101,17 @@ export default {
 
 <style scoped>
 
-.body {
+div {
   position: absolute;
-
-  width: 300px;
-  height: 200px;
 
   display: grid;
   justify-items: center;
   align-items: center;
+}
+
+.body {
+  width: 300px;
+  height: 200px;
 
   font-family: monospace;
   font-size: 50px;
@@ -104,41 +120,55 @@ export default {
   border: 10px solid #045d5c;
   border-radius: 30px;
 
-  opacity: 1;
-
   background: #cceeff;
 
   box-shadow: 10px 10px 0px #00000030;
-
-  transition: all 1s;
-  transform: translate(0, 0) scale(1);
-  transition-timing-function: ease-in;
-
-  animation: wavey 2s ease-in-out infinite;
-  animation-delay: 1s;
 
   user-select: none;
 }
 
 .hidden {
-  opacity: 0;
-  transform: translate(-200px, -200px) scale(0);
+  animation: hidden 2s linear;
+}
+
+.wavey {
+  animation: wavey 2s ease-in-out infinite;
+}
+
+.spining {
+  animation: spining 0.5s ease-in-out;
+}
+
+@keyframes hidden {
+  0% {
+    opacity: 0;
+    transform: translate(-200px, -200px) scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0%, 0%) scale(1);
+  }
 }
 
 @keyframes wavey {
-  
   0% {
-    transform: translate(0%, 0%);
+    transform: translate(-10px, -10px);
   }
-
   50% {
-    transform: translate(10%, 10%);
+    transform: translate(10px, 10px);
   }
-
   100% {
-    transform: translate(0%, 0%);
+    transform: translate(-10px, -10px);
   }
+}
 
+@keyframes spining {
+  0% {
+    transform: rotate(0)
+  }
+  100% {
+    transform: rotate(360deg)
+  }
 }
 
 </style>
