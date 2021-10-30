@@ -114,7 +114,7 @@ div {
   height: 200px;
 
   font-family: monospace;
-  font-size: 50px;
+  font-size: 45px;
   font-weight: bolder;
 
   border: 10px solid #045d5c;
